@@ -13,7 +13,7 @@ const Shop = () => {
     const [displayProducts, setDisplayProducts] = useState([]);
 
     useEffect(() => {
-        fetch('./products.JSON')
+        fetch('./products.json')
             .then(res => res.json())
             .then(data => {
                 setProducts(data);
@@ -71,7 +71,7 @@ const Shop = () => {
                 <div className="cart-container">
                     <Cart cart={cart}>
                         <Link to="/review">
-                            <button className="btn-regular">Review Your Order</button>
+                            <button className="btn btn-lg btn-warning">Review Your Order</button>
                         </Link>
                     </Cart>
                 </div>
