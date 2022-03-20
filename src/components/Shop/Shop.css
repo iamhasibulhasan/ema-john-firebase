@@ -1,17 +1,35 @@
-.search-container{
+.search-container {
     background-color: rgba(0, 0, 0, 0.85);
     text-align: center;
     line-height: 40px;
 }
-.search-container input{
+
+.search-container input {
     width: 75%;
 }
-.shop-container{
+
+.shop-container {
     display: grid;
     grid-template-columns: 3fr 1fr;
 }
-.product-container{
+
+.product-container {
     border-right: 1px solid lightgray;
     margin-right: 5px;
     margin-left: 50px;
+}
+
+.pagination {
+    margin: 30px;
+    text-align: center;
+}
+
+.pagination button {
+    margin: 0 10px;
+    padding: 0 20px;
+}
+
+.pagination .selected {
+    background-color: rgb(50, 50, 167);
+    color: white;
 }

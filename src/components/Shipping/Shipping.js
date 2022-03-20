@@ -1,43 +1,44 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import useAuth from './../../hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
+import { clearTheCart, getStoredCart } from '../../utilities/fakedb';
+import './Shipping.css';
 
 const Shipping = () => {
+    const { register, reset, handleSubmit, formState: { errors } } = useForm();
     const { user } = useAuth();
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
+    const onSubmit = data => {
+        const savedCart = getStoredCart();
+        data.order = savedCart;
 
-    console.log(watch("example"));
+        fetch('https://guarded-mountain-30517.herokuapp.com/orders', {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(res => res.json())
+            .then(result => {
+                if (result.insertedId) {
+                    alert('Order processed successfully');
+                    clearTheCart();
+                    reset();
+                }
+            })
+    };
     return (
-        <div className="container mt-4 w-50">
-            <form onSubmit={handleSubmit(onSubmit)}>
+        <div>
+            <form className="shipping-form" onSubmit={handleSubmit(onSubmit)}>
 
-                <div className="from-group my-4">
-                    <label htmlFor="">Your Name</label>
-                    <input className="form-control" defaultValue={user.displayName} {...register("name", { required: true })} />
-                    {errors.name && <span className="text-danger">Name field is required</span>}
-                </div>
-                <div className="from-group my-4">
-                    <label htmlFor="">Your Email</label>
-                    <input className="form-control" defaultValue={user.email} {...register("email", { required: true })} />
-                    {errors.email && <span className="text-danger">Email field is required</span>}
-                </div>
-                <div className="from-group my-4">
-                    <label htmlFor="">Phone Number</label>
-                    <input className="form-control" placeholder="+8801X XXXXXXXX"  {...register("phone", { required: true })} />
-                    {errors.phone && <span className="text-danger">Phone no. is required</span>}
-                </div>
-                <div className="form-group my-4 row">
-                    <div className="col">
-                        <input className="form-control" placeholder="Address 1" {...register("address1")} />
-                    </div>
-                    <div className="col">
-                        <input className="form-control" placeholder="Address 2" {...register("address2")} />
-                    </div>
-                </div>
+                <input defaultValue={user.displayName} {...register("name")} />
 
+                <input defaultValue={user.email} {...register("email", { required: true })} />
+                {errors.email && <span className="error">This field is required</span>}
+                <input placeholder="Address" defaultValue="" {...register("address")} />
+                <input placeholder="City" defaultValue="" {...register("city")} />
+                <input placeholder="phone number" defaultValue="" {...register("phone")} />
 
-                <input className="btn btn-warning" type="submit" />
+                <input type="submit" />
             </form>
         </div>
     );

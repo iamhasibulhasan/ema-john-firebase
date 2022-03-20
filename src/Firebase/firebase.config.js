@@ -1,11 +1,11 @@
-// Your web app's Firebase configuration
+// console.log(process.env);
 const firebaseConfig = {
-    apiKey: "AIzaSyBZmHD1tIDsbV07B-Z7Rn-BBTaJHa5-Tac",
-    authDomain: "ema-john-react-a5d20.firebaseapp.com",
-    projectId: "ema-john-react-a5d20",
-    storageBucket: "ema-john-react-a5d20.appspot.com",
-    messagingSenderId: "18543549519",
-    appId: "1:18543549519:web:9df8aa5e35e7310319de3a"
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_APP_ID,
 };
 
 export default firebaseConfig;
